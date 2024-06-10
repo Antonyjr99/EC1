@@ -19,6 +19,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             EC_01Theme {
+                ControlScreen()
             }
         }
     }
