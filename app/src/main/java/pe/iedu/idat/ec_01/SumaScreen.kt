@@ -12,19 +12,20 @@ import androidx.compose.ui.Alignment
 
 @Composable
 fun SumaScreen() {
+    var mostrarSumas by remember { mutableStateOf(false) }
     var resultado by remember { mutableStateOf("") }
 
-    // Función para calcular la suma de los dígitos de un número
     fun sumaDeDigitos(numero: Int): Int {
         return numero.toString().map { it.toString().toInt() }.sum()
     }
 
-    // Calcular la suma de los dígitos para cada número del 23 al 99
-    LaunchedEffect(Unit) {
-        val resultados = (23..99).joinToString("\n") { numero ->
-            "Número: $numero, Suma de dígitos: ${sumaDeDigitos(numero)}"
+    LaunchedEffect(mostrarSumas) {
+        if (mostrarSumas) {
+            val resultados = (23..99).joinToString("\n") { numero ->
+                "Número: $numero, Suma de dígitos: ${sumaDeDigitos(numero)}"
+            }
+            resultado = resultados
         }
-        resultado = resultados
     }
 
     Column(
@@ -42,11 +43,23 @@ fun SumaScreen() {
             modifier = Modifier.padding(16.dp)
         )
 
-        Text(
-            text = resultado,
-            style = MaterialTheme.typography.bodyLarge,
-            textAlign = TextAlign.Left
-        )
+        Button(
+            onClick = { mostrarSumas = true },
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text(text = "Mostrar Sumas")
+        }
+
+        if (mostrarSumas) {
+            Text(
+                text = resultado,
+                style = MaterialTheme.typography.bodyLarge,
+                textAlign = TextAlign.Left
+            )
+        }
     }
 }
+
+
+
 
